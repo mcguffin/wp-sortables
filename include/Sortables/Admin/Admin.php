@@ -36,21 +36,26 @@ class Admin extends Core\Singleton {
 			if ( ! apply_filters( 'show_sort_column', true ) || ! apply_filters( "show_{$post_type}_sort_column", true ) ) {
 				continue;
 			}
-			$cols_hook = "manage_{$post_type}_posts_columns";
-			$col_hook = "manage_{$post_type}_posts_custom_column";
-			add_filter( $cols_hook, array( $this, 'add_sort_column' ) );
-			add_filter( $col_hook, array( $this, 'display_post_sort_column' ), 10, 2 );
+			add_filter( "manage_edit-{$post_type}_sortable_columns", array( $this, 'sortable_columns' ) );
+			add_filter( "manage_{$post_type}_posts_columns", array( $this, 'add_sort_column' ) );
+			add_filter( "manage_{$post_type}_posts_custom_column", array( $this, 'display_post_sort_column' ), 10, 2 );
 		}
 
 		foreach ( $this->core->get_sortable_taxonomies() as $taxonomy ) {
 			$cols_hook = "manage_edit-{$taxonomy}_columns";
 			$col_hook = "manage_{$taxonomy}_custom_column";
+			add_filter( "manage_edit-{$taxonomy}_sortable_columns", array( $this, 'sortable_columns' ) );
 			add_filter( $cols_hook, array( $this, 'add_sort_column' ) );
 			add_filter( $col_hook, array( $this, 'display_term_sort_column' ), 10, 3 );
 
 
 		}
 	}
+	public function sortable_columns( $columns ) {
+		$columns['menu_order'] = 'menu_order';
+		return $columns;
+	}
+
 	/**
 	 *	@filter manage_{$post_type}_posts_columns
 	 *	@filter manage_edit-{$taxonomy}_columns

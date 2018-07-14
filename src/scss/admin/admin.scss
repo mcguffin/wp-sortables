@@ -5,7 +5,7 @@
 .wp-list-table {
 	.column-menu_order {
 		$size: 38px;
-		width:$size;
+		width:$size + 20px;
 		text-align: center;
 		vertical-align:middle;
 		.sort-handle {

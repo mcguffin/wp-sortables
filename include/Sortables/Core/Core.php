@@ -263,7 +263,7 @@ class Core extends Plugin {
 		}
 
 		$query->set('orderby', 'menu_order' );
-		$query->set('order', 'ASC' );
+		$query->set('order', isset($_REQUEST['order']) ? $_REQUEST['order'] : 'ASC' );
 
 		return $query;
 	}

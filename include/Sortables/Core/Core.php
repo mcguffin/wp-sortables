@@ -235,7 +235,7 @@ class Core extends Plugin {
 		// Urgh. Regex. feels like back in the days ...
 		$where = preg_replace( '/WHERE\sp\.post_date\s[<>]\s\'([0-9-\s:]+)\'/', '', $where );
 
-		$where = $wpdb->prepare( "WHERE p.menu_order $op %s $where", $post->menu_order );
+		$where = $wpdb->prepare( "WHERE p.menu_order $op %d $where", $post->menu_order );
 		return $where;
 	}
 
@@ -248,7 +248,7 @@ class Core extends Plugin {
 			return;
 		}
 
-		$sort = "ORDER BY p.menu_order 'ASC' LIMIT 1";
+		$sort = "ORDER BY p.menu_order $order LIMIT 1";
 
 		return $sort;
 	}

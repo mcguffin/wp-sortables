@@ -62,7 +62,7 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
 	// don't WP-Update actual repos!
 	if ( ! file_exists( SORTABLES_DIRECTORY . '/.git/' ) ) {
-		AutoUpdate\AutoUpdateGithub::instance();
+		AutoUpdate\AutoUpdateGithub::instance()->init( __FILE__ );
 	}
 
 	Admin\Admin::instance();
@@ -70,4 +70,3 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
 
 }
-

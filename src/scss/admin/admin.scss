@@ -1,3 +1,43 @@
 @import '../variables/variables';
 
 @import '../mixins/mixins';
+
+.wp-list-table {
+	.column-menu_order {
+		$size: 38px;
+		width:$size;
+		text-align: center;
+		vertical-align:middle;
+		.sort-handle {
+			$size: 38px;
+			display: inline-block;
+			box-sizing: border-box;
+			background-color:#fff;
+			border:1px solid $wp-gray;
+			box-shadow:0 0 4px rgba(0,0,0,0.1);
+			text-align:center;
+			padding:( $size - 10px ) / 2 0;
+			line-height:10px;
+			min-width:$size;
+			min-height:$size;
+			border-radius:$size / 2;
+			cursor:move;
+		}
+	}
+	.ui-sortable-helper {
+		//dragged column
+//		background:#ff0;
+	}
+	.ui-sortable-placeholder {
+		& ~ :nth-child(odd) {
+			background-color:transparent;
+			//background-color:#f00;
+		}
+		& ~ :nth-child(even) {
+			background-color:$wp-gray-lighter;
+			//background-color:#00f;
+		}
+		//dragged column
+//		background:#ff0;
+	}
+}

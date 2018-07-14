@@ -49,12 +49,14 @@ function concat_js( src, dest ) {
 
 gulp.task('scss', function() {
 	return [
+		do_scss('admin/admin')
 	];
 });
 
 
 gulp.task('js-admin', function() {
     return [
+		do_js('admin/admin')
     ];
 
 });

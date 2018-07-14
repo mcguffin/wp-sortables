@@ -1,0 +1,41 @@
+/* Both Admin Menu and Post Formats */
+/* Post Format Icons */
+/* Welcome Screen Icons */
+/* Image Editing Icons */
+/* Both Image Editing and TinyMCE */
+/* TinyMCE Icons */
+/* Post Icons */
+/* Sorting */
+/* WPorg specific icons: Jobs, Profiles, WordCamps */
+/* Internal/Products */
+/* Taxonomies */
+/* Widget icons */
+/* Media icons */
+/* Alerts/Notifications/Flags */
+/* Social Icons */
+/* Misc/CPT */
+.wp-list-table .column-menu_order {
+  width: 38px;
+  text-align: center;
+  vertical-align: middle; }
+  .wp-list-table .column-menu_order .sort-handle {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    background-color: #fff;
+    border: 1px solid #f1f1f1;
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 14px 0;
+    line-height: 10px;
+    min-width: 38px;
+    min-height: 38px;
+    border-radius: 19px;
+    cursor: move; }
+
+.wp-list-table .ui-sortable-placeholder ~ :nth-child(odd) {
+  background-color: transparent; }
+
+.wp-list-table .ui-sortable-placeholder ~ :nth-child(even) {
+  background-color: #f9f9f9; }

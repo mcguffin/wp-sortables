@@ -41,5 +41,4 @@ add_filter('sortable_taxonomies',function( $taxonomies ) {
 
 ToDo:
 -----
- - [ ] Support Taxonomies.
  - [ ] Support Hierarchies

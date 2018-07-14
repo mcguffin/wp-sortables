@@ -30,9 +30,190 @@ class Core extends Plugin {
 		add_filter( "get_previous_post_where", array( $this, 'get_adjacent_post_where' ), 10, 5 );
 		add_filter( "get_next_post_where", array( $this, 'get_adjacent_post_where' ), 10, 5 );
 
+		// custom terms sorting
+		add_action('parse_term_query', array( $this , 'parse_term_query' ), 10, 1 );
 
 		parent::__construct();
 	}
+
+	/**
+	 *	@action parse_term_query
+	 */
+	function parse_term_query( $query ) {
+
+		if ( 1 !== count( $query->query_vars['taxonomy'] ) ) {
+			return;
+		}
+
+		if ( ! $this->is_sortable_taxonomy( $query->query_vars['taxonomy'][0] ) ) {
+			return;
+		}
+
+		if ( isset( $_REQUEST['orderby'] ) && $_REQUEST['orderby'] !== 'menu_order' ) {
+			return;
+		}
+
+		$qv = $query->query_vars;
+		$qv['meta_query'] = array(
+			'relation'	=> 'OR',
+			array(
+				'key' => 'menu_order',
+				'compare' => 'EXISTS',
+				'type'	=> 'NUMERIC',
+			),
+			array(
+				'key' => 'menu_order',
+				'compare' => 'NOT EXISTS',
+				'type'	=> 'NUMERIC',
+			),
+		);
+		$qv['orderby'] = 'meta_value';
+		//$qv['order'] = 'ASC';
+		$query->query_vars = $qv;
+	}
+
+
+
+	/**
+	 *	Load frontend styles and scripts
+	 *
+	 *	@action wp_enqueue_scripts
+	 */
+	public function wp_enqueue_style() {
+	}
+
+
+
+
+	/**
+	 *	Load text domain
+	 *
+	 *  @action plugins_loaded
+	 */
+	public function load_textdomain() {
+		$path = pathinfo( dirname( SORTABLES_FILE ), PATHINFO_FILENAME );
+		load_plugin_textdomain( 'wp-sortables', false, $path . '/languages' );
+	}
+
+	/**
+	 *	Init hook.
+	 *
+	 *  @action init
+	 */
+	public function init() {
+	}
+
+	public function init_sortables() {
+		global $wp_post_types;
+
+		// gather sorted post types
+		$sorted_post_types = array();
+
+		foreach ( $wp_post_types as $k => $pt ) {
+			if ( post_type_supports( $k, 'page-attributes' ) ) {
+
+				$sorted_post_types[] = $k;
+
+			}
+		}
+		$this->sorted_post_types = apply_filters( 'sortable_post_types', $sorted_post_types );
+
+		// make sure the rest api works
+		foreach ( $this->sorted_post_types as $post_type ) {
+			if ( isset( $wp_post_types[$post_type] ) ) {
+				$pt = $wp_post_types[ $post_type ];
+
+				if ( ! $pt->show_in_rest ) {
+					$pt->show_in_rest = true;
+				}
+				if ( ! $pt->rest_base ) {
+					$pt->rest_base = $pt->query_var . 's';
+				}
+				if ( ! $pt->rest_controller_class ) {
+					$pt->rest_controller_class = 'WP_REST_Posts_Controller';
+				}
+			}
+		}
+
+		$this->sorted_taxonomies = apply_filters( 'sortable_taxonomies', array() );
+
+		if ( ! empty( $this->sorted_taxonomies ) ) {
+			register_meta( 'term', 'menu_order', [
+				'type'			=> 'integer',
+				'description'	=> __('Sort Key for Terms', 'wp-sortables'),
+				'single' 		=> true,
+				'show_in_rest'	=> true,
+			]);
+
+		}
+		// make sure the rest api works
+		foreach ( $this->sorted_taxonomies as $taxonomy ) {
+			$tx = get_taxonomy( $taxonomy );
+			if ( ! $tx->show_in_rest ) {
+				$tx->show_in_rest = true;
+			}
+			if ( ! $tx->rest_base ) {
+				$tx->rest_base = $tx->name . 's';
+			}
+			if ( ! $tx->rest_controller_class ) {
+				$tx->rest_controller_class = 'WP_REST_Terms_Controller';
+			}
+		}
+	}
+
+	/**
+	 *	@return array
+	 */
+	public function get_sortable_post_types( ) {
+		return $this->sorted_post_types;
+	}
+
+	/**
+	 *	Whether a post type is sortable
+	 *	@param string $post_type
+	 *	@return bool
+	 */
+	public function is_sortable_post_type( $post_type ) {
+		if ( ! did_action('init') ) {
+			_doing_it_wrong('Sortable\Core\Core::is_sorted_post_type',__('is_sorted_post_type() must be called after the init hook','wp-sortables'), '0.0.1' );
+		}
+		return in_array( $post_type, $this->sorted_post_types );
+	}
+
+	/**
+	 *	@return array
+	 */
+	public function get_sortable_taxonomies( ) {
+		return $this->sorted_taxonomies;
+	}
+
+	/**
+	 *	Whether a post type is sortable
+	 *	@param string $post_type
+	 *	@return bool
+	 */
+	public function is_sortable_taxonomy( $taxonomy ) {
+		if ( ! did_action('init') ) {
+			_doing_it_wrong('Sortable\Core\Core::is_sorted_post_type',__('is_sorted_post_type() must be called after the init hook','wp-sortables'), '0.0.1' );
+		}
+		return in_array( $taxonomy, $this->sorted_taxonomies );
+	}
+
+
+	/**
+	 *	Get asset url for this plugin
+	 *
+	 *	@param	string	$asset	URL part relative to plugin class
+	 *	@return wp_enqueue_editor
+	 */
+	public function get_asset_url( $asset ) {
+		return plugins_url( $asset, SORTABLES_FILE );
+	}
+
+
+
+
+
 
 
 	/**
@@ -85,76 +266,6 @@ class Core extends Plugin {
 		$query->set('order', 'ASC' );
 
 		return $query;
-	}
-
-
-
-	/**
-	 *	Load frontend styles and scripts
-	 *
-	 *	@action wp_enqueue_scripts
-	 */
-	public function wp_enqueue_style() {
-	}
-
-
-
-
-	/**
-	 *	Load text domain
-	 *
-	 *  @action plugins_loaded
-	 */
-	public function load_textdomain() {
-		$path = pathinfo( dirname( SORTABLES_FILE ), PATHINFO_FILENAME );
-		load_plugin_textdomain( 'wp-sortables', false, $path . '/languages' );
-	}
-
-	/**
-	 *	Init hook.
-	 *
-	 *  @action init
-	 */
-	public function init() {
-	}
-
-	public function init_sortables() {
-		global $wp_post_types;
-		foreach ( $wp_post_types as $k => $pt ) {
-			if ( post_type_supports( $k, 'page-attributes' ) ) {
-				$this->sorted_post_types[] = $k;
-			}
-		}
-		$this->sorted_post_types = apply_filters( 'sorted_post_types', $this->sorted_post_types );
-	}
-
-	/**
-	 *	@return array
-	 */
-	public function get_sortable_post_types( ) {
-		return $this->sorted_post_types;
-	}
-
-	/**
-	 *	Whether a post type is sortable
-	 *	@param string $post_type
-	 *	@return bool
-	 */
-	public function is_sortable_post_type( $post_type ) {
-		if ( ! did_action('init') ) {
-			_doing_it_wrong('Sortable\Core\Core::is_sorted_post_type',__('is_sorted_post_type() must be called after the init hook','wp-sortables'), '0.0.1' );
-		}
-		return in_array( $post_type, $this->sorted_post_types );
-	}
-
-	/**
-	 *	Get asset url for this plugin
-	 *
-	 *	@param	string	$asset	URL part relative to plugin class
-	 *	@return wp_enqueue_editor
-	 */
-	public function get_asset_url( $asset ) {
-		return plugins_url( $asset, SORTABLES_FILE );
 	}
 
 

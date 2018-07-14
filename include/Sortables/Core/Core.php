@@ -9,7 +9,7 @@ if ( ! defined('ABSPATH') ) {
 
 class Core extends Plugin {
 
-	private $sorted_post_types = array('post');
+	private $sorted_post_types = array();
 	private $sorted_taxonomies = array();
 
 	/**

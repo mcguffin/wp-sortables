@@ -36,13 +36,11 @@
 		batch();
 	}
 
-
 	$(document).ready(function(){
 		$('#the-list').sortable({
 			update: updateSort,
 			handle: '.sort-handle',
 		});
 	});
-
 
 })(jQuery)

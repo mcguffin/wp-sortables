@@ -1,4 +1,9 @@
 <?php
+/**
+ *	@package Sortables\Core
+ *	@version 1.0.0
+ *	2018-09-22
+ */
 
 namespace Sortables\Core;
 
@@ -48,6 +53,6 @@ abstract class PluginComponent extends Singleton {
 	 *		'messages'	=> array,
 	 *	)
 	 */
-	abstract function uninstall();
+	abstract static function uninstall();
 
 }

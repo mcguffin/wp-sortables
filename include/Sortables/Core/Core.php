@@ -18,7 +18,7 @@ class Core extends Plugin {
 	protected function __construct() {
 
 		add_action( 'plugins_loaded' , array( $this , 'load_textdomain' ) );
-		add_action( 'init' , array( $this , 'init_sortables' ) );
+		add_action( 'after_setup_theme' , array( $this , 'init_sortables' ) );
 		add_action( 'init' , array( $this , 'init' ) );
 		add_action( 'wp_enqueue_scripts' , array( $this , 'wp_enqueue_style' ) );
 
@@ -98,7 +98,7 @@ class Core extends Plugin {
 	/**
 	 *	Init hook.
 	 *
-	 *  @action init
+	 *  @action after_setup_theme
 	 */
 	public function init() {
 	}
@@ -174,7 +174,9 @@ class Core extends Plugin {
 	 *	@return bool
 	 */
 	public function is_sortable_post_type( $post_type ) {
-		if ( ! did_action('init') ) {
+		if ( ! did_action('after_setup_theme') ) {
+			$ex = new \Exception();
+			echo $ex->getTraceAsString();
 			_doing_it_wrong('Sortable\Core\Core::is_sorted_post_type',__('is_sorted_post_type() must be called after the init hook','wp-sortables'), '0.0.1' );
 		}
 		return in_array( $post_type, $this->sorted_post_types );
@@ -193,7 +195,7 @@ class Core extends Plugin {
 	 *	@return bool
 	 */
 	public function is_sortable_taxonomy( $taxonomy ) {
-		if ( ! did_action('init') ) {
+		if ( ! did_action('after_setup_theme') ) {
 			_doing_it_wrong('Sortable\Core\Core::is_sorted_post_type',__('is_sorted_post_type() must be called after the init hook','wp-sortables'), '0.0.1' );
 		}
 		return in_array( $taxonomy, $this->sorted_taxonomies );

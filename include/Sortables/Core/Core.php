@@ -247,7 +247,7 @@ class Core extends Plugin {
 	public function get_adjacent_post_sort( $sort, $post, $order ) {
 
 		if ( ! $this->is_sortable_post_type($post->post_type) ) {
-			return;
+			return $sort;
 		}
 
 		$sort = "ORDER BY p.menu_order $order LIMIT 1";

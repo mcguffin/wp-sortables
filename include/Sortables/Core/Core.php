@@ -224,7 +224,7 @@ class Core extends Plugin {
 	public function get_adjacent_post_where( $where, $in_same_term, $excluded_terms, $taxonomy, $post ) {
 
 		if ( ! $this->is_sortable_post_type($post->post_type) ) {
-			return;
+			return $where;
 		}
 
 		global $wpdb;

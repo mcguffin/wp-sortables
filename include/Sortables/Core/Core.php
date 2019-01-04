@@ -177,11 +177,11 @@ class Core extends Plugin {
 	 *	@return bool
 	 */
 	public function is_sortable_post_type( $post_type ) {
-		if ( ! did_action('after_setup_theme') ) {
-			$ex = new \Exception();
-			echo $ex->getTraceAsString();
-			_doing_it_wrong('Sortable\Core\Core::is_sorted_post_type',__('is_sorted_post_type() must be called after the init hook','wp-sortables'), '0.0.1' );
-		}
+		// if ( ! did_action('after_setup_theme') ) {
+		// 	$ex = new \Exception();
+		// 	echo $ex->getTraceAsString();
+		// 	_doing_it_wrong('Sortable\Core\Core::is_sorted_post_type',__('is_sorted_post_type() must be called after the init hook','wp-sortables'), '0.0.1' );
+		// }
 		return in_array( $post_type, $this->sorted_post_types );
 	}
 
@@ -198,9 +198,11 @@ class Core extends Plugin {
 	 *	@return bool
 	 */
 	public function is_sortable_taxonomy( $taxonomy ) {
-		if ( ! did_action('after_setup_theme') ) {
-			_doing_it_wrong('Sortable\Core\Core::is_sorted_post_type',__('is_sorted_post_type() must be called after the init hook','wp-sortables'), '0.0.1' );
-		}
+		// if ( ! did_action('after_setup_theme') ) {
+		// 	$ex = new \Exception();
+		// 	echo $ex->getTraceAsString();
+		// 	_doing_it_wrong('Sortable\Core\Core::is_sorted_post_type',__('is_sorted_post_type() must be called after the init hook','wp-sortables'), '0.0.1' );
+		// }
 		return in_array( $taxonomy, $this->sorted_taxonomies );
 	}
 

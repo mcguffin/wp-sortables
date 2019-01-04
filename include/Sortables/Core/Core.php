@@ -18,8 +18,8 @@ class Core extends Plugin {
 	protected function __construct() {
 
 		add_action( 'plugins_loaded' , array( $this , 'load_textdomain' ) );
-		add_action( 'after_setup_theme' , array( $this , 'init_sortables' ) );
-		add_action( 'init' , array( $this , 'init' ) );
+//		add_action( 'after_setup_theme' , array( $this , 'init_sortables' ), 15 );
+		add_action( 'init' , array( $this , 'init' ), 15 );
 		add_action( 'wp_enqueue_scripts' , array( $this , 'wp_enqueue_style' ) );
 
 		// custom post sorting
@@ -101,6 +101,7 @@ class Core extends Plugin {
 	 *  @action after_setup_theme
 	 */
 	public function init() {
+		$this->init_sortables();
 	}
 
 	public function init_sortables() {
@@ -110,12 +111,14 @@ class Core extends Plugin {
 		$sorted_post_types = array();
 
 		foreach ( $wp_post_types as $k => $pt ) {
+
 			if ( post_type_supports( $k, 'page-attributes' ) ) {
 
 				$sorted_post_types[] = $k;
 
 			}
 		}
+
 		$this->sorted_post_types = apply_filters( 'sortable_post_types', $sorted_post_types );
 
 		// make sure the rest api works

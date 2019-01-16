@@ -207,6 +207,11 @@ class Core extends Plugin {
 	}
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> add-plugin-settings
 	/**
 	 *	@filter get_{$adjacent}_post_where
 	 */

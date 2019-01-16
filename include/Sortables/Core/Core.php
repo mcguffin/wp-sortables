@@ -139,7 +139,6 @@ class Core extends Plugin {
 			}
 		}
 
-
 		if ( ! empty( $this->sorted_taxonomies ) ) {
 			register_meta( 'term', 'menu_order', [
 				'type'			=> 'integer',
@@ -162,6 +161,13 @@ class Core extends Plugin {
 			if ( ! $tx->rest_controller_class ) {
 				$tx->rest_controller_class = 'WP_REST_Terms_Controller';
 			}
+			register_meta('term','menu_order',array(
+				'object_subtype'	=> $taxonomy,
+				'type'				=> 'integer',
+				'description'		=> '',
+				'single'			=> true,
+				'show_in_rest'		=> true,
+			));
 		}
 	}
 

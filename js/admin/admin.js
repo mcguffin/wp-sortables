@@ -2,12 +2,20 @@
 
 
 	function getLevel( el ) {
-		return getLevelClass( el ).split('-').pop();
+		var cls = getLevelClass( el );
+		if ( 'undefined' === typeof cls ) {
+			return;
+		}
+		return cls.split('-').pop();
 	}
 
 	function getLevelClass(el) {
-		return $(el)
-			.attr('class').split(' ') // array
+		var cls = $(el).attr('class');
+
+		if ( 'undefined' === typeof cls ) {
+			return;
+		}
+		return cls.split(' ') // array
 			.find( function(v){ return v.match(/level-/) } );
 	}
 
@@ -20,7 +28,9 @@
 				var $table = $('#the-list').closest('table'),
 					current_page, per_page, counter,
 					get_data, get_order,
-					requests, batch;
+					requests, batch,
+					level_class = getLevelClass( ui.item ),
+					item_selector = 'undefined' !== typeof level_class ? '#the-list tr.' + level_class : '#the-list tr';
 
 				if ( $table.hasClass('tags') ) {
 					get_data = function(counter) {
@@ -45,7 +55,7 @@
 				counter = current_page * per_page;
 				requests = [];
 
-				$('#the-list tr.' + getLevelClass( ui.item ) ).each(function( i, el ){
+				$( item_selector ).each(function( i, el ){
 					var obj_id = $(el).find('.check-column [type="checkbox"]').val();
 					counter++;
 
@@ -59,6 +69,7 @@
 						method:'POST',
 					});
 				});
+				console.log(requests);
 				batch = function() {
 					if ( ! requests.length ) {
 						return;
@@ -81,7 +92,12 @@
 				var children = [],
 					$next = $(ui.placeholder).next(),
 					levelClass = getLevelClass( ui.item ), // str
-					level = levelClass.split('-').pop(); // faster!
+					level; // faster!
+
+				if ( 'undefined' === typeof levelClass ) {
+					return;
+				}
+//				if ( getLevel( ui.item ) )
 
 				$(ui.placeholder).siblings(':not()')
 
@@ -106,8 +122,12 @@
 	});
 	//
 	$(document).on('mouseover','#the-list .sort-handle',function(e){
-		var level = getLevel( $( e.target ).closest('tr') ),
+		var level = getLevel( $( e.target ).closest('tr')[0] ),
 			include = true,
+			$items,
+			has_levels = 'undefined' !== typeof level;
+
+		if ( has_levels ) { // has levels
 			$items = $( '#the-list' ).children( '.level-' + level )
 				.filter(function( idx ){
 					ret = include;
@@ -120,6 +140,9 @@
 					}
 					return ret;
 				}); // same level
+		} else {
+			$items = $( '#the-list' ).children();
+		}
 		//console.log($items);
 		$( '#the-list' ).sortable( 'option', 'items', $items );
 	});

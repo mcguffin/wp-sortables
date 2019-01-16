@@ -99,7 +99,12 @@ class Core extends Plugin {
 
 		// gather sorted post types
 		$sorted_post_types = array();
+		//*
+		$this->sorted_post_types = get_option( 'sortable_post_types' );
 
+		$this->sorted_taxonomies = get_option( 'sortable_taxonomies' );
+
+		/*/
 		foreach ( $wp_post_types as $k => $pt ) {
 
 			if ( post_type_supports( $k, 'page-attributes' ) ) {
@@ -111,6 +116,9 @@ class Core extends Plugin {
 
 		$this->sorted_post_types = apply_filters( 'sortable_post_types', $sorted_post_types );
 
+		$this->sorted_taxonomies = apply_filters( 'sortable_taxonomies', array() );
+
+		//*/
 		// make sure the rest api works
 		foreach ( $this->sorted_post_types as $post_type ) {
 			if ( isset( $wp_post_types[$post_type] ) ) {
@@ -128,7 +136,6 @@ class Core extends Plugin {
 			}
 		}
 
-		$this->sorted_taxonomies = apply_filters( 'sortable_taxonomies', array() );
 
 		if ( ! empty( $this->sorted_taxonomies ) ) {
 			register_meta( 'term', 'menu_order', [
@@ -139,6 +146,7 @@ class Core extends Plugin {
 			]);
 
 		}
+
 		// make sure the rest api works
 		foreach ( $this->sorted_taxonomies as $taxonomy ) {
 			$tx = get_taxonomy( $taxonomy );

@@ -1,5 +1,9 @@
 <?php
-
+/**
+ *	@package Sortables\AutoUpdate
+ *	@version 1.0.0
+ *	2018-09-22
+ */
 namespace Sortables\AutoUpdate;
 
 if ( ! defined('ABSPATH') ) {

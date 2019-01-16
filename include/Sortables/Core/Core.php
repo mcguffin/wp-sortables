@@ -33,7 +33,8 @@ class Core extends Plugin {
 		// custom terms sorting
 		add_action('parse_term_query', array( $this , 'parse_term_query' ), 10, 1 );
 
-		parent::__construct();
+		$args = func_get_args();
+		parent::__construct( ...$args );
 	}
 
 	/**
@@ -83,17 +84,6 @@ class Core extends Plugin {
 	}
 
 
-
-
-	/**
-	 *	Load text domain
-	 *
-	 *  @action plugins_loaded
-	 */
-	public function load_textdomain() {
-		$path = pathinfo( dirname( SORTABLES_FILE ), PATHINFO_FILENAME );
-		load_plugin_textdomain( 'wp-sortables', false, $path . '/languages' );
-	}
 
 	/**
 	 *	Init hook.
@@ -206,21 +196,15 @@ class Core extends Plugin {
 		return in_array( $taxonomy, $this->sorted_taxonomies );
 	}
 
-
 	/**
 	 *	Get asset url for this plugin
 	 *
 	 *	@param	string	$asset	URL part relative to plugin class
-	 *	@return wp_enqueue_editor
+	 *	@return string
 	 */
 	public function get_asset_url( $asset ) {
-		return plugins_url( $asset, SORTABLES_FILE );
+		return plugins_url( $asset, $this->get_plugin_file() );
 	}
-
-
-
-
-
 
 
 	/**

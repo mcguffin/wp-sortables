@@ -17,9 +17,10 @@
 		l10n = sortables_admin.l10n,
 		sortable = {
 			update: function( event, ui ) {
-				var $table = $(ui.sender).closest('table'),
+				var $table = $('#the-list').closest('table'),
 					current_page, per_page, counter,
-					request, batch, get_data, get_order;
+					get_data, get_order,
+					requests, batch;
 
 				if ( $table.hasClass('tags') ) {
 					get_data = function(counter) {
@@ -44,18 +45,6 @@
 				counter = current_page * per_page;
 				requests = [];
 
-				batch = function() {
-					if ( ! requests.length ) {
-						return;
-					}
-					var data = requests.shift();
-					wp.apiRequest( data ).done(function(response, status, xhr ){
-
-						$('[id$="-'+response.id+'"] .sort-handle').text( get_order( response ) );
-						batch();
-					});
-				};
-
 				$('#the-list tr.' + getLevelClass( ui.item ) ).each(function( i, el ){
 					var obj_id = $(el).find('.check-column [type="checkbox"]').val();
 					counter++;
@@ -70,8 +59,21 @@
 						method:'POST',
 					});
 				});
+				batch = function() {
+					if ( ! requests.length ) {
+						return;
+					}
+					var data = requests.shift();
+					console.log(data)
+					wp.apiRequest( data ).done(function(response, status, xhr ){
 
-				batch();
+						$('[id$="-'+response.id+'"] .sort-handle').text( get_order( response ) );
+						batch();
+					});
+				};
+
+				batch(requests);
+
 			},
 			handle: '.sort-handle',
 			start:function( event, ui ) {
@@ -102,18 +104,23 @@
 		//$('#the-list').sortable(sortable);
 		$('#the-list').sortable( sortable );
 	});
+	//
 	$(document).on('mouseover','#the-list .sort-handle',function(e){
 		var level = getLevel( $( e.target ).closest('tr') ),
 			include = true,
 			$items = $( '#the-list' ).children( '.level-' + level )
 				.filter(function( idx ){
 					ret = include;
+					if ( !idx ) {
+						return ret;
+					}
+
 					if ( include && getLevel( $(this).prev() ) < level ) {
 						include = false;
 					}
 					return ret;
 				}); // same level
-		console.log($items);
+		//console.log($items);
 		$( '#the-list' ).sortable( 'option', 'items', $items );
 	});
 })(jQuery)

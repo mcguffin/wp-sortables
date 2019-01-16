@@ -122,6 +122,9 @@ class Core extends Plugin {
 		// make sure the rest api works
 		foreach ( $this->sorted_post_types as $post_type ) {
 			if ( isset( $wp_post_types[$post_type] ) ) {
+				// make sure pt has `menu_order` property
+				add_post_type_support($post_type,'page-attributes');
+
 				$pt = $wp_post_types[ $post_type ];
 
 				if ( ! $pt->show_in_rest ) {

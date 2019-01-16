@@ -101,7 +101,7 @@ class Admin extends Core\Singleton {
 		}
 
 		wp_enqueue_style( 'sortables-admin' , $this->core->get_asset_url( '/css/admin/admin.css' ) );
-		wp_enqueue_script( 'sortables-admin' , $this->core->get_asset_url( 'js/admin/admin.js' ), array('wp-api') );
+		wp_enqueue_script( 'sortables-admin' , $this->core->get_asset_url( 'js/admin/admin.js' ), array('wp-api', 'jquery-ui-sortable') );
 		wp_localize_script('sortables-admin' , 'sortables_admin' , array(
 			'options'	=> array(
 				'object_type'	=> $object_type,

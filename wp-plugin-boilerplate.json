@@ -6,7 +6,10 @@
     },
     "autoupdate": {},
     "git": {},
-    "gulp": {}
+    "gulp": {},
+    "settings": {
+      "sortables": {}
+    }
   },
   "plugin_author": "J\u00f6rn Lund",
   "plugin_author_uri": "",

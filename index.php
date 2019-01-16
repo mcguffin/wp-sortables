@@ -9,6 +9,7 @@ Version: 0.0.6
 Author URI: https://github.com/mcguffin
 License: GPL3
 Github Repository: mcguffin/wp-sortables
+Github Plugin URI: mcguffin/wp-sortables
 Text Domain: wp-sortables
 Domain Path: /languages/
 */
@@ -43,30 +44,28 @@ if ( ! defined('ABSPATH') ) {
 }
 
 
-define( 'SORTABLES_FILE', __FILE__ );
-define( 'SORTABLES_DIRECTORY', plugin_dir_path(__FILE__) );
-define( 'SORTABLES_PLUGIN', pathinfo( SORTABLES_DIRECTORY, PATHINFO_FILENAME ) . '/' . pathinfo( __FILE__, PATHINFO_BASENAME ) );
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'include/autoload.php';
 
-require_once SORTABLES_DIRECTORY . 'include/autoload.php';
-
-Core\Core::instance();
-
-
-
-
-
-
+Core\Core::instance( __FILE__ );
 
 
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
-	// don't WP-Update actual repos!
-	if ( ! file_exists( SORTABLES_DIRECTORY . '/.git/' ) ) {
-		AutoUpdate\AutoUpdateGithub::instance()->init( __FILE__ );
-	}
-
 	Admin\Admin::instance();
+	Settings\SettingsSortables::instance();
 
+	// don't WP-Update actual repos!
+	if ( ! file_exists( plugin_dir_path(__FILE__) . '/.git/' ) ) {
 
+		// not a git. Check if https://github.com/afragen/github-updater is active. (function is_plugin_active not available yet)
+		$active_plugins = get_option('active_plugins');
+		if ( $sitewide_plugins = get_site_option('active_sitewide_plugins') ) {
+			$active_plugins = array_merge( $active_plugins, array_keys( $sitewide_plugins ) );
+		}
 
+		if ( ! in_array( 'github-updater/github-updater.php', $active_plugins ) ) {
+			// not github updater. Init our our own...
+			AutoUpdate\AutoUpdateGithub::instance();
+		}
+	}
 }

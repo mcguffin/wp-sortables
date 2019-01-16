@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com//wp-sortables#readme",
   "devDependencies": {
-    "gulp": "*",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "*",
     "gulp-concat": "*",
     "gulp-rename": "*",

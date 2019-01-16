@@ -200,8 +200,6 @@ class Core extends Plugin {
 	}
 
 
-
-
 	/**
 	 *	@filter get_{$adjacent}_post_where
 	 */

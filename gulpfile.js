@@ -28,7 +28,9 @@ function do_js( src ) {
 	return gulp.src( './src/js/' + src + '.js' )
 		.pipe( sourcemaps.init() )
 		.pipe( gulp.dest( './js/' + dir ) )
-		.pipe( uglify().on('error', gulputil.log ) )
+		.pipe( uglify().on('error', function(e){
+			console.log(e);
+		} ) )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( sourcemaps.write() )
 		.pipe( gulp.dest( './js/' + dir ) );
@@ -39,7 +41,9 @@ function concat_js( src, dest ) {
 		.pipe( sourcemaps.init() )
 		.pipe( concat( dest ) )
 		.pipe( gulp.dest( './js/' ) )
-		.pipe( uglify().on('error', gulputil.log ) )
+		.pipe( uglify().on('error', function(e){
+			console.log(e);
+		} ) )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( sourcemaps.write() )
 		.pipe( gulp.dest( './js/' ) );
@@ -48,17 +52,12 @@ function concat_js( src, dest ) {
 
 
 gulp.task('scss', function() {
-	return [
-		do_scss('admin/admin')
-	];
+	return do_scss('admin/admin');
 });
 
 
 gulp.task('js-admin', function() {
-    return [
-		do_js('admin/admin')
-    ];
-
+	return do_js('admin/admin');
 });
 
 
@@ -68,12 +67,12 @@ gulp.task( 'js', function(){
 } );
 
 
-gulp.task('build', ['scss','js','js-admin'] );
+gulp.task('build', gulp.parallel( 'scss','js-admin') );
 
 
 gulp.task('watch', function() {
 	// place code for your default task here
-	gulp.watch('./src/scss/**/*.scss',[ 'scss' ]);
-	gulp.watch('./src/js/**/*.js',[ 'js', 'js-admin' ]);
+	gulp.watch('./src/scss/**/*.scss', gulp.parallel( 'scss') );
+	gulp.watch('./src/js/**/*.js', gulp.parallel( 'js-admin' ));
 });
-gulp.task('default', ['build','watch']);
+gulp.task('default', gulp.series('build','watch') );

@@ -51,6 +51,11 @@ class Admin extends Core\Singleton {
 
 		}
 	}
+
+	/**
+	 *	@filter manage_edit-{$post_type}_sortable_columns
+	 *	@filter manage_edit-{$taxonomy}_sortable_columns
+	 */
 	public function sortable_columns( $columns ) {
 		$columns['menu_order'] = 'menu_order';
 		return $columns;
@@ -61,7 +66,7 @@ class Admin extends Core\Singleton {
 	 *	@filter manage_edit-{$taxonomy}_columns
 	 */
 	public function add_sort_column( $columns ) {
-		return array( 'menu_order' => __('#','wp-sortables') ) + $columns;
+		return array( 'menu_order' => __('#','wp-sortables') ) + $columns + array( '_sortables_hidden' => '' );
 	}
 
 	/**
@@ -69,7 +74,12 @@ class Admin extends Core\Singleton {
 	 */
 	public function display_post_sort_column( $column, $post_id ) {
 		if ( $column === 'menu_order' ) {
-			printf( '<span class="sort-handle">%d</span>', get_post($post_id)->menu_order );
+			$post = get_post( $post_id );
+			printf(
+				'<span data-parent-id="%d" class="sort-handle">%d</span>',
+				$post->post_parent,
+				$post->menu_order
+			);
 		}
 	}
 
@@ -78,7 +88,11 @@ class Admin extends Core\Singleton {
 	 */
 	public function display_term_sort_column( $content, $column, $term_id ) {
 		if ( $column === 'menu_order' ) {
-			return sprintf( '<span class="sort-handle">%d</span>', get_term_meta( $term_id, 'menu_order', true ) );
+			return sprintf(
+				'<span data-parent-id="%d" class="sort-handle">%d</span>',
+				get_term( $term_id )->parent,
+				get_term_meta( $term_id, 'menu_order', true )
+			);
 		}
 		return $content;
 	}

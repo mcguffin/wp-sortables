@@ -146,29 +146,29 @@ class Core extends Plugin {
 				'single' 		=> true,
 				'show_in_rest'	=> true,
 			]);
+			// make sure the rest api works
+			foreach ( $this->sorted_taxonomies as $taxonomy ) {
+				$tx = get_taxonomy( $taxonomy );
+				if ( ! $tx->show_in_rest ) {
+					$tx->show_in_rest = true;
+				}
+				if ( ! $tx->rest_base ) {
+					$tx->rest_base = $tx->name . 's';
+				}
+				if ( ! $tx->rest_controller_class ) {
+					$tx->rest_controller_class = 'WP_REST_Terms_Controller';
+				}
+				register_meta('term','menu_order',array(
+					'object_subtype'	=> $taxonomy,
+					'type'				=> 'integer',
+					'description'		=> '',
+					'single'			=> true,
+					'show_in_rest'		=> true,
+				));
+			}
 
 		}
 
-		// make sure the rest api works
-		foreach ( $this->sorted_taxonomies as $taxonomy ) {
-			$tx = get_taxonomy( $taxonomy );
-			if ( ! $tx->show_in_rest ) {
-				$tx->show_in_rest = true;
-			}
-			if ( ! $tx->rest_base ) {
-				$tx->rest_base = $tx->name . 's';
-			}
-			if ( ! $tx->rest_controller_class ) {
-				$tx->rest_controller_class = 'WP_REST_Terms_Controller';
-			}
-			register_meta('term','menu_order',array(
-				'object_subtype'	=> $taxonomy,
-				'type'				=> 'integer',
-				'description'		=> '',
-				'single'			=> true,
-				'show_in_rest'		=> true,
-			));
-		}
 	}
 
 	/**
@@ -196,6 +196,9 @@ class Core extends Plugin {
 	 *	@return array
 	 */
 	public function get_sortable_taxonomies( ) {
+		if ( empty( $this->sorted_taxonomies ) ) {
+			return array();
+		}
 		return $this->sorted_taxonomies;
 	}
 

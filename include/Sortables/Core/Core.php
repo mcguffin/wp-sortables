@@ -104,6 +104,14 @@ class Core extends Plugin {
 
 		$this->sorted_taxonomies = get_option( 'sortable_taxonomies' );
 
+		if ( ! is_array( $this->sorted_post_types ) ) {
+			$this->sorted_post_types = array();
+		}
+
+		if ( ! is_array( $this->sorted_taxonomies ) ) {
+			$this->sorted_taxonomies = array();
+		}
+
 		/*/
 		foreach ( $wp_post_types as $k => $pt ) {
 
@@ -196,9 +204,6 @@ class Core extends Plugin {
 	 *	@return array
 	 */
 	public function get_sortable_taxonomies( ) {
-		if ( empty( $this->sorted_taxonomies ) ) {
-			return array();
-		}
 		return $this->sorted_taxonomies;
 	}
 

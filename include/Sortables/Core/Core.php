@@ -40,7 +40,7 @@ class Core extends Plugin {
 	/**
 	 *	@action parse_term_query
 	 */
-	function parse_term_query( $query ) {
+	public function parse_term_query( $query ) {
 
 		if ( 1 !== count( $query->query_vars['taxonomy'] ) ) {
 			return;
@@ -94,6 +94,10 @@ class Core extends Plugin {
 		$this->init_sortables();
 	}
 
+
+	/**
+	 *	gather sortable post types and taxonomies
+	 */
 	public function init_sortables() {
 		global $wp_post_types;
 
@@ -112,22 +116,6 @@ class Core extends Plugin {
 			$this->sorted_taxonomies = array();
 		}
 
-		/*/
-		foreach ( $wp_post_types as $k => $pt ) {
-
-			if ( post_type_supports( $k, 'page-attributes' ) ) {
-
-				$sorted_post_types[] = $k;
-
-			}
-		}
-
-		$this->sorted_post_types = apply_filters( 'sortable_post_types', $sorted_post_types );
-
-		$this->sorted_taxonomies = apply_filters( 'sortable_taxonomies', array() );
-
-		//*/
-		// make sure the rest api works
 		foreach ( $this->sorted_post_types as $post_type ) {
 			if ( isset( $wp_post_types[$post_type] ) ) {
 				// make sure pt has `menu_order` property
@@ -141,6 +129,7 @@ class Core extends Plugin {
 				if ( ! $pt->rest_base ) {
 					$pt->rest_base = $pt->query_var . 's';
 				}
+				// make sure the rest api works
 				if ( ! $pt->rest_controller_class ) {
 					$pt->rest_controller_class = 'WP_REST_Posts_Controller';
 				}
@@ -163,6 +152,7 @@ class Core extends Plugin {
 				if ( ! $tx->rest_base ) {
 					$tx->rest_base = $tx->name . 's';
 				}
+				// make sure the rest api works
 				if ( ! $tx->rest_controller_class ) {
 					$tx->rest_controller_class = 'WP_REST_Terms_Controller';
 				}
@@ -192,11 +182,6 @@ class Core extends Plugin {
 	 *	@return bool
 	 */
 	public function is_sortable_post_type( $post_type ) {
-		// if ( ! did_action('after_setup_theme') ) {
-		// 	$ex = new \Exception();
-		// 	echo $ex->getTraceAsString();
-		// 	_doing_it_wrong('Sortable\Core\Core::is_sorted_post_type',__('is_sorted_post_type() must be called after the init hook','wp-sortables'), '0.0.1' );
-		// }
 		return in_array( $post_type, $this->sorted_post_types );
 	}
 
@@ -213,11 +198,6 @@ class Core extends Plugin {
 	 *	@return bool
 	 */
 	public function is_sortable_taxonomy( $taxonomy ) {
-		// if ( ! did_action('after_setup_theme') ) {
-		// 	$ex = new \Exception();
-		// 	echo $ex->getTraceAsString();
-		// 	_doing_it_wrong('Sortable\Core\Core::is_sorted_post_type',__('is_sorted_post_type() must be called after the init hook','wp-sortables'), '0.0.1' );
-		// }
 		return in_array( $taxonomy, $this->sorted_taxonomies );
 	}
 

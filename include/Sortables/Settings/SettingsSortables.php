@@ -72,9 +72,7 @@ class SettingsSortables extends Settings {
 
 
 	/**
-	 *	Setup options.
-	 *
-	 *	@action admin_init
+	 *	@inheritdoc
 	 */
 	public function register_settings() {
 

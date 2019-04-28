@@ -29,7 +29,7 @@ class Admin extends Core\Singleton {
 	 *	Admin init
 	 *	@action admin_init
 	 */
-	function admin_init() {
+	public function admin_init() {
 
 		foreach ( $this->core->get_sortable_post_types() as $post_type ) {
 			// allow to disable column
@@ -101,7 +101,7 @@ class Admin extends Core\Singleton {
 	 *	Enqueue options Assets
 	 *	@action admin_print_scripts
 	 */
-	function enqueue_assets() {
+	public function enqueue_assets() {
 
 		$screen = get_current_screen();
 		if ( $screen->taxonomy ) {

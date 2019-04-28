@@ -26,7 +26,9 @@ abstract class Settings extends Core\PluginComponent {
 
 	}
 
-
+	/**
+	 *	@action admin_init
+	 */
 	abstract function register_settings();
 
 
@@ -53,7 +55,7 @@ abstract class Settings extends Core\PluginComponent {
 		<?php
 
 	}
-	
+
 	/**
 	 *	Sanitize checkbox input
 	 *

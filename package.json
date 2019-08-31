@@ -1,6 +1,6 @@
 {
   "name": "wp-sortables",
-  "version": "0.0.1",
+  "version": "0.0.12",
   "description": "Plugin description",
   "private": true,
   "scripts": {

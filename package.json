@@ -25,5 +25,26 @@
     "gulp-sourcemaps": "*",
     "gulp-uglify": "*",
     "gulp-util": "*"
+  },
+  "wporg": {
+    "steps": [
+      "build",
+      "git",
+      "github"
+    ],
+    "type": "plugin",
+    "build": {
+      "prebuild": [
+        "wp i18n make-pot . languages/wp-sortables.pot --domain=wp-sortables --exclude=tmp"
+      ],
+      "build": []
+    },
+    "git": {
+      "host": "github.com",
+      "user": "mcguffin"
+    },
+    "wporg": {
+      "assets": ".wporg"
+    }
   }
 }

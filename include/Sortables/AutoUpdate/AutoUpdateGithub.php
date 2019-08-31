@@ -65,12 +65,12 @@ class AutoUpdateGithub extends AutoUpdate {
 			$repoinfo = json_decode( wp_remote_retrieve_body($response) );
 			$base_url = $repoinfo->html_url;
 
-			$urls[ __( 'Releases', 'gitupdate-test' ) ] = sprintf( '%s/releases', $base_url );
+			$urls[ __( 'Releases', 'wp-sortables' ) ] = sprintf( '%s/releases', $base_url );
 			if ( $repoinfo->has_wiki ) {
-				$urls[ __( 'Wiki', 'gitupdate-test' ) ] = sprintf( '%s/wiki', $base_url );
+				$urls[ __( 'Wiki', 'wp-sortables' ) ] = sprintf( '%s/wiki', $base_url );
 			}
 			if ( $repoinfo->has_issues ) {
-				$urls[ __( 'Issues', 'gitupdate-test' ) ] = sprintf( '%s/issues', $base_url );
+				$urls[ __( 'Issues', 'wp-sortables' ) ] = sprintf( '%s/issues', $base_url );
 			}
 			if ( $repoinfo->license ) {
 				$urls[ $repoinfo->license->name ] = $repoinfo->license->url;
@@ -96,11 +96,11 @@ class AutoUpdateGithub extends AutoUpdate {
 		));
 
 		if ( ! is_wp_error( $response ) ) {
-			$sections[ __('Description','gitupdate-test') ] = wp_remote_retrieve_body($response);
+			$sections[ __('Description','wp-sortables') ] = wp_remote_retrieve_body($response);
 		}
 
 		if ( ! empty( $urls_section ) ) {
-			$sections[ __( 'Links', 'gitupdate-test' ) ] = $urls_section;
+			$sections[ __( 'Links', 'wp-sortables' ) ] = $urls_section;
 		}
 
 		// parse release info github mardown
@@ -112,7 +112,7 @@ class AutoUpdateGithub extends AutoUpdate {
 		));
 
 		if ( ! is_wp_error( $response ) ) {
-			$sections[ __('Notes','gitupdate-test') ] = wp_remote_retrieve_body( $response );
+			$sections[ __('Notes','wp-sortables') ] = wp_remote_retrieve_body( $response );
 		}
 
 		return $sections;

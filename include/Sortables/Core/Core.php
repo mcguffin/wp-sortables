@@ -9,29 +9,28 @@ if ( ! defined('ABSPATH') ) {
 
 class Core extends Plugin {
 
-	private $sorted_post_types = array();
-	private $sorted_taxonomies = array();
+	private $sorted_post_types = [];
+	private $sorted_taxonomies = [];
 
 	/**
 	 *	@inheritdoc
 	 */
 	protected function __construct() {
 
-		add_action( 'plugins_loaded' , array( $this , 'load_textdomain' ) );
+		add_action( 'plugins_loaded', [ $this, 'load_textdomain' ] );
 //		add_action( 'after_setup_theme' , array( $this , 'init_sortables' ), 15 );
-		add_action( 'init' , array( $this , 'init' ), 15 );
-		add_action( 'wp_enqueue_scripts' , array( $this , 'wp_enqueue_style' ) );
+		add_action( 'init', [ $this, 'init' ], 15 );
+		add_action( 'wp_enqueue_scripts', [ $this , 'wp_enqueue_style' ] );
 
 		// custom post sorting
-		add_filter( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
-		add_filter( 'get_next_post_sort', array( $this, 'get_adjacent_post_sort'), 10, 3 );
-		add_filter( 'get_previous_post_sort', array( $this, 'get_adjacent_post_sort'), 10, 3 );
-
-		add_filter( "get_previous_post_where", array( $this, 'get_adjacent_post_where' ), 10, 5 );
-		add_filter( "get_next_post_where", array( $this, 'get_adjacent_post_where' ), 10, 5 );
+		add_filter( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
+		add_filter( 'get_next_post_sort', [ $this, 'get_adjacent_post_sort' ], 10, 3 );
+		add_filter( 'get_previous_post_sort', [ $this, 'get_adjacent_post_sort' ], 10, 3 );
+		add_filter( 'get_previous_post_where', [ $this, 'get_adjacent_post_where' ], 10, 5 );
+		add_filter( 'get_next_post_where', [ $this, 'get_adjacent_post_where' ], 10, 5 );
 
 		// custom terms sorting
-		add_action('parse_term_query', array( $this , 'parse_term_query' ), 10, 1 );
+		add_action('parse_term_query', [ $this , 'parse_term_query' ], 10, 1 );
 
 		$args = func_get_args();
 		parent::__construct( ...$args );
@@ -55,19 +54,19 @@ class Core extends Plugin {
 		}
 
 		$qv = $query->query_vars;
-		$qv['meta_query'] = array(
+		$qv['meta_query'] = [
 			'relation'	=> 'OR',
-			array(
+			[
 				'key' => 'menu_order',
 				'compare' => 'EXISTS',
 				'type'	=> 'NUMERIC',
-			),
-			array(
+			],
+			[
 				'key' => 'menu_order',
 				'compare' => 'NOT EXISTS',
 				'type'	=> 'NUMERIC',
-			),
-		);
+			],
+		];
 		$qv['orderby'] = 'meta_value';
 		//$qv['order'] = 'ASC';
 		$query->query_vars = $qv;
@@ -102,18 +101,18 @@ class Core extends Plugin {
 		global $wp_post_types;
 
 		// gather sorted post types
-		$sorted_post_types = array();
+		$sorted_post_types = [];
 		//*
 		$this->sorted_post_types = get_option( 'sortable_post_types' );
 
 		$this->sorted_taxonomies = get_option( 'sortable_taxonomies' );
 
 		if ( ! is_array( $this->sorted_post_types ) ) {
-			$this->sorted_post_types = array();
+			$this->sorted_post_types = [];
 		}
 
 		if ( ! is_array( $this->sorted_taxonomies ) ) {
-			$this->sorted_taxonomies = array();
+			$this->sorted_taxonomies = [];
 		}
 
 		foreach ( $this->sorted_post_types as $post_type ) {
@@ -156,13 +155,13 @@ class Core extends Plugin {
 				if ( ! $tx->rest_controller_class ) {
 					$tx->rest_controller_class = 'WP_REST_Terms_Controller';
 				}
-				register_meta('term','menu_order',array(
+				register_meta( 'term', 'menu_order', [
 					'object_subtype'	=> $taxonomy,
 					'type'				=> 'integer',
 					'description'		=> '',
 					'single'			=> true,
 					'show_in_rest'		=> true,
-				));
+				]);
 			}
 
 		}

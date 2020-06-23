@@ -20,8 +20,8 @@ class Admin extends Core\Singleton {
 
 		$this->core = Core\Core::instance();
 
-		add_action( 'admin_init', array( $this , 'admin_init' ) );
-		add_action( 'admin_print_scripts', array( $this , 'enqueue_assets' ) );
+		add_action( 'admin_init', [ $this , 'admin_init' ] );
+		add_action( 'admin_print_scripts', [ $this , 'enqueue_assets' ] );
 	}
 
 
@@ -36,17 +36,17 @@ class Admin extends Core\Singleton {
 			if ( ! apply_filters( 'show_sort_column', true ) || ! apply_filters( "show_{$post_type}_sort_column", true ) ) {
 				continue;
 			}
-			add_filter( "manage_edit-{$post_type}_sortable_columns", array( $this, 'sortable_columns' ) );
-			add_filter( "manage_{$post_type}_posts_columns", array( $this, 'add_sort_column' ) );
-			add_filter( "manage_{$post_type}_posts_custom_column", array( $this, 'display_post_sort_column' ), 10, 2 );
+			add_filter( "manage_edit-{$post_type}_sortable_columns", [ $this, 'sortable_columns' ] );
+			add_filter( "manage_{$post_type}_posts_columns", [ $this, 'add_sort_column' ] );
+			add_filter( "manage_{$post_type}_posts_custom_column", [ $this, 'display_post_sort_column' ], 10, 2 );
 		}
 
 		foreach ( $this->core->get_sortable_taxonomies() as $taxonomy ) {
 			$cols_hook = "manage_edit-{$taxonomy}_columns";
 			$col_hook = "manage_{$taxonomy}_custom_column";
-			add_filter( "manage_edit-{$taxonomy}_sortable_columns", array( $this, 'sortable_columns' ) );
-			add_filter( $cols_hook, array( $this, 'add_sort_column' ) );
-			add_filter( $col_hook, array( $this, 'display_term_sort_column' ), 10, 3 );
+			add_filter( "manage_edit-{$taxonomy}_sortable_columns", [ $this, 'sortable_columns' ] );
+			add_filter( $cols_hook, [ $this, 'add_sort_column' ] );
+			add_filter( $col_hook, [ $this, 'display_term_sort_column' ], 10, 3 );
 
 
 		}
@@ -66,7 +66,7 @@ class Admin extends Core\Singleton {
 	 *	@filter manage_edit-{$taxonomy}_columns
 	 */
 	public function add_sort_column( $columns ) {
-		return array( 'menu_order' => __('#','wp-sortables') ) + $columns + array( '_sortables_hidden' => '' );
+		return [ 'menu_order' => __('#','wp-sortables') ] + $columns + [ '_sortables_hidden' => '' ];
 	}
 
 	/**
@@ -114,17 +114,15 @@ class Admin extends Core\Singleton {
 			return;
 		}
 
-		wp_enqueue_style( 'sortables-admin' , $this->core->get_asset_url( '/css/admin/admin.css' ), [], $this->core->get_version() );
-		wp_enqueue_script( 'sortables-admin' , $this->core->get_asset_url( 'js/admin/admin.js' ), array('wp-api', 'jquery-ui-sortable'), $this->core->get_version() );
-		wp_localize_script('sortables-admin' , 'sortables_admin' , array(
-			'options'	=> array(
+		wp_enqueue_style( 'sortables-admin', $this->core->get_asset_url( '/css/admin/admin.css' ), [], $this->core->get_version() );
+		wp_enqueue_script( 'sortables-admin', $this->core->get_asset_url( 'js/admin/admin.js' ), ['wp-api', 'jquery-ui-sortable'], $this->core->get_version() );
+		wp_localize_script('sortables-admin', 'sortables_admin', [
+			'options'	=> [
 				'object_type'	=> $object_type,
 				'rest_base'	=> $obj->rest_base,
-			),
-			'l10n'		=> array(
-
-			),
-		) );
+			],
+			'l10n'		=> [],
+		] );
 	}
 
 }

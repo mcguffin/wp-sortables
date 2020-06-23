@@ -23,7 +23,7 @@ class SettingsSortables extends Settings {
 	 */
 	protected function __construct() {
 
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 
 		parent::__construct();
 
@@ -35,7 +35,7 @@ class SettingsSortables extends Settings {
 	 *	@action admin_menu
 	 */
 	public function admin_menu() {
-		add_options_page( __('WP Sortables Settings' , 'wp-sortables' ),__( 'Sortables' , 'wp-sortables' ), 'manage_options', $this->optionset, array( $this, 'settings_page' ) );
+		add_options_page( __('WP Sortables Settings' , 'wp-sortables' ),__( 'Sortables' , 'wp-sortables' ), 'manage_options', $this->optionset, [ $this, 'settings_page' ] );
 	}
 
 	/**
@@ -78,40 +78,36 @@ class SettingsSortables extends Settings {
 
 		$settings_section	= 'sortables_settings';
 
-		add_settings_section( $settings_section, __( 'Sortable Types',  'wp-sortables' ), array( $this, 'sortables_description' ), $this->optionset );
+		add_settings_section( $settings_section, __( 'Sortable Types',  'wp-sortables' ), [ $this, 'sortables_description' ], $this->optionset );
 
-		$post_types = get_post_types(array(
+		$post_types = get_post_types([
 			'show_ui'	=> true,
-		));
+		]);
 
 
 		// more settings go here ...
 		$option_name		= 'sortable_post_types';
-		register_setting( $this->optionset , $option_name, array( $this, 'sanitize_post_types' ) );
+		register_setting( $this->optionset , $option_name, [ $this, 'sanitize_post_types' ] );
 		add_settings_field(
 			$option_name,
 			__( 'Post Types',  'wp-sortables' ),
-			array( $this, 'select_post_types' ),
+			[ $this, 'select_post_types' ],
 			$this->optionset,
 			$settings_section,
-			array(
-				'option_name'			=> $option_name,
-			)
+			[ 'option_name' => $option_name ]
 		);
 
 
 		// more settings go here ...
 		$option_name		= 'sortable_taxonomies';
-		register_setting( $this->optionset , $option_name, array( $this, 'sanitize_taxonomies' ) );
+		register_setting( $this->optionset , $option_name, [ $this, 'sanitize_taxonomies' ] );
 		add_settings_field(
 			$option_name,
 			__( 'Taxonomies',  'wp-sortables' ),
-			array( $this, 'select_taxonomies' ),
+			[ $this, 'select_taxonomies' ],
 			$this->optionset,
 			$settings_section,
-			array(
-				'option_name'			=> $option_name,
-			)
+			[ 'option_name' => $option_name ]
 		);
 
 	}
@@ -136,9 +132,9 @@ class SettingsSortables extends Settings {
 		@list( $option_name ) = array_values( $args );
 
 		$option_value = (array) get_option( $option_name );
-		$post_types = get_post_types( array(
+		$post_types = get_post_types( [
 			'show_ui'	=> true,
-		), 'objects' );
+		], 'objects' );
 
 		foreach ( $post_types as $pto ) {
 			$id = $option_name . '-' . $pto->name;
@@ -164,9 +160,9 @@ class SettingsSortables extends Settings {
 		@list( $option_name ) = array_values( $args );
 
 		$option_value = (array) get_option( $option_name );
-		$taxonomies = get_taxonomies( array(
+		$taxonomies = get_taxonomies( [
 			'show_ui'	=> true,
-		), 'objects' );
+		], 'objects' );
 
 		foreach ( $taxonomies as $txo ) {
 			$id = $option_name . '-' . $txo->name;
@@ -213,8 +209,8 @@ class SettingsSortables extends Settings {
 	 *	Fired on plugin activation
 	 */
 	public function activate() {
-		add_option( 'sortable_post_types' , array() , '' , false );
-		add_option( 'sortable_taxonomies' , array() , '' , false );
+		add_option( 'sortable_post_types', [], '', false );
+		add_option( 'sortable_taxonomies', [], '', false );
 	}
 
 

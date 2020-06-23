@@ -46,7 +46,12 @@
 
 				$getItems( parent )
 					.each(function( i, el ){
+						/*
 						var id = $(el).find('.check-column [type="checkbox"]').val();
+						/*/
+						var id = parseInt($(el).attr('id').replace(/[^\d]+/,''))
+						//*/
+
 						counter++;
 
 						// only save changed posts

@@ -66,7 +66,7 @@ class Admin extends Core\Singleton {
 	 *	@filter manage_edit-{$taxonomy}_columns
 	 */
 	public function add_sort_column( $columns ) {
-		return [ 'menu_order' => __('#','wp-sortables') ] + $columns + [ '_sortables_hidden' => '' ];
+		return [ 'menu_order' => __('#','wp-sortables') ] + $columns;// + [ '_sortables_hidden' => '' ];
 	}
 
 	/**

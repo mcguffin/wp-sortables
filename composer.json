@@ -1,8 +1,15 @@
 {
-  "name": "mcguffin/wp-package-security-check",
+  "name": "mcguffin/wp-sortables",
   "type": "wordpress-plugin",
-  "license": "GPL-2.0-or-later",
-  "homepage": "https://bitbucket.org/polyplanet/wp-faq-sections.git",
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/mcguffin/wp-sortables",
+  "keywords": [
+    "WordPress",
+    "sort", 
+    "order",
+    "post types",
+    "taxonomies"
+  ],
   "require": {
     "composer/installers": "~1.2"
   },
@@ -12,11 +19,6 @@
     "phpcompatibility/php-compatibility": "*",
 	"pheromone/phpcs-security-audit":"*"
   },
-  "keywords": [
-    "plugin",
-    "wordpress",
-    "security"
-  ],
   "scripts": {
     "post-install-cmd": [
       "[ -f vendor/bin/phpcs ] && \"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/pheromone/phpcs-security-audit || true"

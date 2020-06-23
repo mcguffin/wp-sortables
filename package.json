@@ -1,7 +1,7 @@
 {
   "name": "wp-sortables",
   "version": "0.0.13",
-  "description": "Plugin description",
+  "description": "Sortable Posts and Terms in WordPress",
   "private": true,
   "scripts": {
     "dev": "gulp dev",

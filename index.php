@@ -5,7 +5,7 @@ Plugin Name: WP Sortables
 Plugin URI: https://github.com/mcguffin/wp-sortables
 Description: Sortable Posts and Terms in WordPress
 Author: Jörn Lund
-Version: 0.0.15
+Version: 0.0.16
 Author URI: https://github.com/mcguffin
 License: GPL3
 Github Plugin URI: mcguffin/wp-sortables

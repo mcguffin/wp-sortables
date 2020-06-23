@@ -1,6 +1,6 @@
 {
   "name": "wp-sortables",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Sortable Posts and Terms in WordPress",
   "private": true,
   "scripts": {

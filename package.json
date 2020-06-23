@@ -29,6 +29,11 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2"
   },
+  "browserslist": [
+    "last 3 versions",
+    "> 0.125%",
+    "IE 10"
+  ],
   "wporg": {
     "steps": [
       "build",

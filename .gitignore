@@ -10,3 +10,5 @@
 .svnignore
 .sass-cache
 node_modules/
+vendor/
+phpcs-report.txt

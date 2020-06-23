@@ -43,11 +43,11 @@ class SettingsSortables extends Settings {
 	 */
 	public function settings_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 		?>
 		<div class="wrap">
-			<h2><?php _e('WP Sortables Settings', 'wp-sortables') ?></h2>
+			<h2><?php esc_html_e('WP Sortables Settings', 'wp-sortables') ?></h2>
 
 			<form action="options.php" method="post">
 				<?php
@@ -123,7 +123,7 @@ class SettingsSortables extends Settings {
 
 		?>
 		<div class="inside">
-			<p><?php _e( 'Select which Content Types you would like to make sortable.', 'wp-sortables' ); ?></p>
+			<p><?php esc_html_e( 'Select which Content Types you would like to make sortable.', 'wp-sortables' ); ?></p>
 		</div>
 		<?php
 	}
@@ -143,9 +143,9 @@ class SettingsSortables extends Settings {
 		foreach ( $post_types as $pto ) {
 			$id = $option_name . '-' . $pto->name;
 			?>
-				<label for="<?php echo $id ?>">
-					<input type="checkbox" id="<?php echo $id ?>" name="<?php echo $option_name ?>[]" value="<?php echo $pto->name; ?>" <?php checked( in_array($pto->name,$option_value) ) ?> />
-					<?php echo $pto->labels->name ?>
+				<label for="<?php esc_attr_e( $id ); ?>">
+					<input type="checkbox" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $option_name ) ?>[]" value="<?php esc_attr_e( $pto->name ); ?>" <?php checked( in_array($pto->name,$option_value) ) ?> />
+					<?php esc_html_e( $pto->labels->name ); ?>
 				</label>
 			<?php
 		}
@@ -171,9 +171,9 @@ class SettingsSortables extends Settings {
 		foreach ( $taxonomies as $txo ) {
 			$id = $option_name . '-' . $txo->name;
 			?>
-				<label for="<?php echo $id ?>">
-					<input type="checkbox" id="<?php echo $id ?>" name="<?php echo $option_name ?>[]" value="<?php echo $txo->name; ?>" <?php checked( in_array($txo->name,$option_value) ) ?> />
-					<?php echo $txo->labels->name ?>
+				<label for="<?php esc_attr_e( $id ); ?>">
+					<input type="checkbox" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $option_name ); ?>[]" value="<?php esc_attr_e( $txo->name ); ?>" <?php checked( in_array($txo->name,$option_value) ) ?> />
+					<?php esc_html_e( $txo->labels->name ) ?>
 				</label>
 			<?php
 		}

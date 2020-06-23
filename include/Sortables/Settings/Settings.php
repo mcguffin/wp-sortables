@@ -43,13 +43,13 @@ abstract class Settings extends Core\PluginComponent {
 		$option_value = get_option( $option_name );
 
 		?><label>
-			<input type="hidden" name="<?php echo $option_name ?>" value="0" />
-			<input type="checkbox" <?php checked( boolval( $option_value ), true, true ); ?> name="<?php echo $option_name ?>" value="1" />
-			<?php echo $label ?>
+			<input type="hidden" name="<?php esc_attr_e( $option_name ); ?>" value="0" />
+			<input type="checkbox" <?php checked( boolval( $option_value ), true, true ); ?> name="<?php esc_attr_e( $option_name ); ?>" value="1" />
+			<?php esc_html_e( $label ); ?>
 		</label>
 		<?php
 			if ( ! empty( $description ) ) {
-				printf( '<p class="description">%s</p>', $description );
+				printf( '<p class="description">%s</p>', esc_html( $description ) );
 			}
 		?>
 		<?php

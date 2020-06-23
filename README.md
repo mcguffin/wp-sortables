@@ -42,3 +42,5 @@ add_filter('sortable_taxonomies',function( $taxonomies ) {
 ToDo:
 -----
  - [ ] Support Hierarchies
+ - [ ] Remove AutoUpdate
+

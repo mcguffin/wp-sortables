@@ -4,7 +4,11 @@
   "description": "Plugin description",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "gulp dev",
+    "postinstall": "composer install",
+    "audit": "./vendor/squizlabs/php_codesniffer/bin/phpcs . --report=code --standard=./phpcs-security.ruleset.xml -n -s > ./phpcs-report.txt || exit 0",
+    "audit-win": "powershell ./vendor/squizlabs/php_codesniffer/bin/phpcs . --report=code --standard=./phpcs-security.ruleset.xml -n -s > ./phpcs-report.txt",
+    "ver": "echo \"<?php return $(jq .version < ./package.json);\" > include/version.php"
   },
   "repository": {
     "type": "git",
@@ -17,14 +21,13 @@
   },
   "homepage": "https://github.com//wp-sortables#readme",
   "devDependencies": {
-    "gulp": "^4.0.0",
-    "gulp-autoprefixer": "*",
-    "gulp-concat": "*",
-    "gulp-rename": "*",
-    "gulp-sass": "*",
-    "gulp-sourcemaps": "*",
-    "gulp-uglify": "*",
-    "gulp-util": "*"
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2"
   },
   "wporg": {
     "steps": [
@@ -37,14 +40,18 @@
       "prebuild": [
         "wp i18n make-pot . languages/wp-sortables.pot --domain=wp-sortables --exclude=tmp"
       ],
-      "build": []
+      "build": [
+        "gulp build",
+        "npm run ver"
+      ]
     },
     "git": {
       "host": "github.com",
       "user": "mcguffin"
     },
     "wporg": {
-      "assets": ".wporg"
+      "assets": ".wporg",
+      "svn_user": "podpirate"
     }
   }
 }

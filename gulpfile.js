@@ -1,7 +1,6 @@
 var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
 var gulp = require('gulp');
-var gulputil = require('gulp-util');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
@@ -79,4 +78,5 @@ gulp.task('watch', function() {
 	gulp.watch('./src/scss/**/*.scss', gulp.parallel( 'scss') );
 	gulp.watch('./src/js/**/*.js', gulp.parallel( 'js-admin' ));
 });
+gulp.task('dev', gulp.series('build','watch') );
 gulp.task('default', gulp.series('build','watch') );

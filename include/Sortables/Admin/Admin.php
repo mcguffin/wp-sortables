@@ -77,8 +77,8 @@ class Admin extends Core\Singleton {
 			$post = get_post( $post_id );
 			printf(
 				'<span data-parent-id="%d" class="sort-handle">%d</span>',
-				$post->post_parent,
-				$post->menu_order
+				intval( $post->post_parent ),
+				intval( $post->menu_order )
 			);
 		}
 	}
@@ -90,8 +90,8 @@ class Admin extends Core\Singleton {
 		if ( $column === 'menu_order' ) {
 			return sprintf(
 				'<span data-parent-id="%d" class="sort-handle">%d</span>',
-				get_term( $term_id )->parent,
-				get_term_meta( $term_id, 'menu_order', true )
+				intval( get_term( $term_id )->parent ),
+				intval( get_term_meta( $term_id, 'menu_order', true ) )
 			);
 		}
 		return $content;
@@ -114,8 +114,8 @@ class Admin extends Core\Singleton {
 			return;
 		}
 
-		wp_enqueue_style( 'sortables-admin' , $this->core->get_asset_url( '/css/admin/admin.css' ) );
-		wp_enqueue_script( 'sortables-admin' , $this->core->get_asset_url( 'js/admin/admin.js' ), array('wp-api', 'jquery-ui-sortable') );
+		wp_enqueue_style( 'sortables-admin' , $this->core->get_asset_url( '/css/admin/admin.css' ), [], $this->core->get_version() );
+		wp_enqueue_script( 'sortables-admin' , $this->core->get_asset_url( 'js/admin/admin.js' ), array('wp-api', 'jquery-ui-sortable'), $this->core->get_version() );
 		wp_localize_script('sortables-admin' , 'sortables_admin' , array(
 			'options'	=> array(
 				'object_type'	=> $object_type,

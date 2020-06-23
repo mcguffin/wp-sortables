@@ -231,7 +231,7 @@ class Core extends Plugin {
 		// Urgh. Regex. feels like back in the days ...
 		$where = preg_replace( '/WHERE\sp\.post_date\s[<>]\s\'([0-9-\s:]+)\'/', '', $where );
 
-		$where = $wpdb->prepare( "WHERE p.menu_order $op %d $where", $post->menu_order );
+		$where = $wpdb->prepare( "WHERE p.menu_order $op %d $where", $post->menu_order ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return $where;
 	}
 
@@ -259,7 +259,10 @@ class Core extends Plugin {
 		}
 
 		$query->set('orderby', 'menu_order' );
-		$query->set('order', isset($_REQUEST['order']) ? $_REQUEST['order'] : 'ASC' );
+		$query->set('order', 
+			isset( $_REQUEST['order'] ) && 'DESC' === wp_unslash( $_REQUEST['order'] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			? 'DESC' : 'ASC' 
+		);
 
 		return $query;
 	}

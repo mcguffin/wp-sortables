@@ -1,6 +1,6 @@
 {
   "name": "wp-sortables",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Plugin description",
   "private": true,
   "scripts": {
@@ -37,6 +37,7 @@
     ],
     "type": "plugin",
     "build": {
+      "versionedFiles": null,
       "prebuild": [
         "wp i18n make-pot . languages/wp-sortables.pot --domain=wp-sortables --exclude=tmp"
       ],

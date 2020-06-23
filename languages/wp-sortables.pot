@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Sortables plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Sortables 0.0.14\n"
+"Project-Id-Version: WP Sortables 0.0.15\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-sortables\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-06-23T11:06:47+00:00\n"
+"POT-Creation-Date: 2020-06-23T11:36:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: wp-sortables\n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "#"
 msgstr ""
 
-#: include/Sortables/Core/Core.php:142
+#: include/Sortables/Core/Core.php:141
 msgid "Sort Key for Terms"
 msgstr ""
 
@@ -63,10 +63,10 @@ msgstr ""
 msgid "Post Types"
 msgstr ""
 
-#: include/Sortables/Settings/SettingsSortables.php:108
+#: include/Sortables/Settings/SettingsSortables.php:106
 msgid "Taxonomies"
 msgstr ""
 
-#: include/Sortables/Settings/SettingsSortables.php:126
+#: include/Sortables/Settings/SettingsSortables.php:122
 msgid "Select which Content Types you would like to make sortable."
 msgstr ""

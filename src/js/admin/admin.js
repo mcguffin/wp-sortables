@@ -46,30 +46,29 @@
 
 				$getItems( parent )
 					.each(function( i, el ){
-
+						var id = $(el).find('.check-column [type="checkbox"]').val();
 						counter++;
 
 						// only save changed posts
 						if ( counter == parseInt( $(el).find('.sort-handle').text() ) ) {
 							return;
 						}
+						$('[id$="-'+id+'"] .sort-handle').addClass( 'sync' );
 
 						requests.push({
-							path: wpApiSettings.versionString + opt.rest_base + '/' + $(el).find('.check-column [type="checkbox"]').val(),
+							path: wpApiSettings.versionString + opt.rest_base + '/' + id,
 							data: get_data( counter ),
 							method:'POST',
 						});
 					});
-				console.log(requests);
 				batch = function() {
 					if ( ! requests.length ) {
 						return;
 					}
 					var data = requests.shift();
-
 					wp.apiRequest( data ).done(function(response, status, xhr ){
 
-						$('[id$="-'+response.id+'"] .sort-handle').text( get_order( response ) );
+						$('[id$="-'+response.id+'"] .sort-handle').removeClass( 'sync' ).text( get_order( response ) );
 						batch();
 					});
 				};

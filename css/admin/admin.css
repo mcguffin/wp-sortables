@@ -14,11 +14,27 @@
 /* Alerts/Notifications/Flags */
 /* Social Icons */
 /* Misc/CPT */
+@-webkit-keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+@keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
 .wp-list-table .column-menu_order {
   width: 58px;
   text-align: center;
   vertical-align: middle; }
   .wp-list-table .column-menu_order .sort-handle {
+    position: relative;
     display: inline-block;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
@@ -33,6 +49,21 @@
     min-height: 38px;
     border-radius: 19px;
     cursor: move; }
+    .wp-list-table .column-menu_order .sort-handle.sync::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 28px;
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      border: 6px dotted #cccccc;
+      border-radius: 50%;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      -webkit-animation: rotating 2s linear infinite;
+              animation: rotating 2s linear infinite;
+      background: #fff; }
 
 .wp-list-table .ui-sortable-placeholder ~ :nth-child(odd) {
   background-color: transparent; }

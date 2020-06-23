@@ -2,6 +2,15 @@
 
 @import '../mixins/mixins';
 
+@keyframes rotating {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
 .wp-list-table {
 	.column-menu_order {
 		$size: 38px;
@@ -10,6 +19,7 @@
 		vertical-align:middle;
 		.sort-handle {
 			$size: 38px;
+			position: relative;
 			display: inline-block;
 			box-sizing: border-box;
 			background-color:#fff;
@@ -22,6 +32,22 @@
 			min-height:$size;
 			border-radius:$size / 2;
 			cursor:move;
+			&.sync {
+				&::before {
+					content: '';
+					display: block;
+					width: ( $size - 10px );
+					height: ( $size - 10px );
+					position: absolute;
+					left: 5px;
+					top:5px;
+					border: 6px dotted $wp-gray-dark;
+					border-radius:50%;
+					box-sizing: border-box;
+					animation: rotating 2s linear infinite;
+					background:#fff;
+				}
+			}
 		}
 	}
 	.ui-sortable-helper {

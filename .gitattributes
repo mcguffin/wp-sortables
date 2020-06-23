@@ -1,11 +1,11 @@
 # git
 .gitignore export-ignore
 .gitattributes export-ignore
-*.md
+*.md export-ignore
 # gulp
 gulpfile.js export-ignore
 package*.json export-ignore
 /src export-ignore
 wp-plugin-boilerplate.json export-ignore
-phpcs*.xml
-composer.*
+phpcs*.xml export-ignore
+composer.* export-ignore

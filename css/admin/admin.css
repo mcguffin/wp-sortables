@@ -17,56 +17,64 @@
 @-webkit-keyframes rotating {
   from {
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg); }
+            transform: rotate(0deg);
+  }
   to {
     -webkit-transform: rotate(360deg);
-            transform: rotate(360deg); } }
+            transform: rotate(360deg);
+  }
+}
 @keyframes rotating {
   from {
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg); }
+            transform: rotate(0deg);
+  }
   to {
     -webkit-transform: rotate(360deg);
-            transform: rotate(360deg); } }
-
+            transform: rotate(360deg);
+  }
+}
 .wp-list-table .column-menu_order {
   width: 58px;
   text-align: center;
-  vertical-align: middle; }
-  .wp-list-table .column-menu_order .sort-handle {
-    position: relative;
-    display: inline-block;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-    background-color: #fff;
-    border: 1px solid #f1f1f1;
-    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-            box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    padding: 14px 0;
-    line-height: 10px;
-    min-width: 38px;
-    min-height: 38px;
-    border-radius: 19px;
-    cursor: move; }
-    .wp-list-table .column-menu_order .sort-handle.sync::before {
-      content: '';
-      display: block;
-      width: 28px;
-      height: 28px;
-      position: absolute;
-      left: 5px;
-      top: 5px;
-      border: 6px dotted #cccccc;
-      border-radius: 50%;
-      -webkit-box-sizing: border-box;
-              box-sizing: border-box;
-      -webkit-animation: rotating 2s linear infinite;
-              animation: rotating 2s linear infinite;
-      background: #fff; }
-
+  vertical-align: middle;
+}
+.wp-list-table .column-menu_order .sort-handle {
+  position: relative;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: #fff;
+  border: 1px solid #f1f1f1;
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 14px 0;
+  line-height: 10px;
+  min-width: 38px;
+  min-height: 38px;
+  border-radius: 19px;
+  cursor: move;
+}
+.wp-list-table .column-menu_order .sort-handle.sync::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  border: 6px dotted #cccccc;
+  border-radius: 50%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-animation: rotating 2s linear infinite;
+          animation: rotating 2s linear infinite;
+  background: #fff;
+}
 .wp-list-table .ui-sortable-placeholder ~ :nth-child(odd) {
-  background-color: transparent; }
-
+  background-color: transparent;
+}
 .wp-list-table .ui-sortable-placeholder ~ :nth-child(even) {
-  background-color: #f9f9f9; }
+  background-color: #f9f9f9;
+}

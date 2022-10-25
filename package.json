@@ -21,19 +21,34 @@
   },
   "homepage": "https://github.com//wp-sortables#readme",
   "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.1.0",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-uglify": "^3.0.2"
+      "@babel/core": "^7.11.6",
+      "@babel/plugin-proposal-class-properties": "^7.5.0",
+      "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
+      "@babel/plugin-transform-react-jsx": "^7.3.0",
+      "@babel/preset-env": "^7.11.5",
+      "babelify": "^10.0.0",
+      "bootstrap": "^4.6.0",
+      "browserify": "*",
+      "browserify-shim": "*",
+      "event-stream": "*",
+      "gulp": "^4.0.2",
+      "gulp-autoprefixer": "^8.0.0",
+      "gulp-sass": "^5.0.0",
+      "gulp-sourcemaps": "^3.0.0",
+      "sass": "^1.51.0",
+      "tinyify": "^3.0.0",
+      "vinyl-buffer": "*",
+      "vinyl-source-stream": "*"
   },
   "browserslist": [
     "last 3 versions",
     "> 0.125%",
     "IE 10"
   ],
+  "browserify-shim": {
+    "jquery": "global:jQuery",
+    "backbone": "global:Backbone"
+  },
   "wporg": {
     "steps": [
       "build",

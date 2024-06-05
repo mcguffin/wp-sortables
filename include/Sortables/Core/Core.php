@@ -145,6 +145,11 @@ class Core extends Plugin {
 			// make sure the rest api works
 			foreach ( $this->sorted_taxonomies as $taxonomy ) {
 				$tx = get_taxonomy( $taxonomy );
+
+				if ( ! is_object( $tx ) ) {
+					continue;
+				}
+
 				if ( ! $tx->show_in_rest ) {
 					$tx->show_in_rest = true;
 				}

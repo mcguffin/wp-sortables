@@ -41,7 +41,7 @@ class Core extends Plugin {
 	 */
 	public function parse_term_query( $query ) {
 
-		if ( 1 !== count( $query->query_vars['taxonomy'] ) ) {
+		if ( ! isset( $query->query_vars['taxonomy'] ) ||  ! is_array( $query->query_vars['taxonomy'] ) || 1 !== count( $query->query_vars['taxonomy'] ) ) {
 			return;
 		}
 

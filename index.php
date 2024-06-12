@@ -11,6 +11,7 @@ License: GPL3
 Github Plugin URI: mcguffin/wp-sortables
 Text Domain: wp-sortables
 Domain Path: /languages/
+Update URI: https://github.com/mcguffin/wp-sortables/raw/master/.wp-release-info.json
 */
 
 /*  Copyright 2018  Jörn Lund
